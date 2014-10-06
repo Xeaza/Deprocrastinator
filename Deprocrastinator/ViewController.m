@@ -66,6 +66,29 @@
         // Update checkmarked buttson list
         [self.checkedIndexes replaceObjectAtIndex:indexPath.row withObject:[NSNumber numberWithBool:NO]];
     }
+
+    if ([self.tableView isEditing]) {
+        [self.todoListArray removeObjectAtIndex:indexPath.row];
+        [self.checkedIndexes removeObjectAtIndex:indexPath.row];
+        [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        [self.tableView reloadData];
+
+        [self.tableView setEditing:NO animated:YES];
+        
+    }
+}
+
+-(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        [self.todoListArray removeObjectAtIndex:indexPath.row];
+        [self.checkedIndexes removeObjectAtIndex:indexPath.row];
+        [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        [self.tableView reloadData];
+
+        [self.tableView setEditing:NO animated:YES];
+
+    }
 }
 
 - (IBAction)onAddButtonPressed:(id)sender {
@@ -77,6 +100,20 @@
 
     self.addToDoItemTextField.text = nil;
     [self.addToDoItemTextField resignFirstResponder];
+}
+- (IBAction)onEditButtonPressed:(id)sender {
+    UIButton *tempButton = sender;
+    if ([tempButton.titleLabel.text isEqualToString:@"Edit"]) {
+        [tempButton setTitle:@"Done" forState:UIControlStateNormal];
+        // Add Logic to delete a rows
+
+        [self.tableView setEditing:YES animated:YES];
+
+    } else {
+        [tempButton setTitle:@"Edit" forState:UIControlStateNormal];
+        [self.tableView setEditing:NO animated:NO];
+
+    }
 }
 
 
