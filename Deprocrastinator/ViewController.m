@@ -8,7 +8,8 @@
 
 #import "ViewController.h"
 
-@interface ViewController ()
+@interface ViewController () <UITableViewDelegate, UITableViewDataSource>
+
 
 @end
 
@@ -18,6 +19,10 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
 }
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
