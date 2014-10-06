@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="14A379a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="5kN-PO-ftd">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="5kN-PO-ftd">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -16,9 +18,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="IGH-na-gdK">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="IGH-na-gdK">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="546"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="IGH-na-gdK" secondAttribute="height" multiplier="100:91" id="s2I-cY-fxj"/>
+                                </constraints>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="toDoListCell" id="zCk-0n-uqG">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
@@ -28,18 +33,22 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="s2I-cY-fxj"/>
+                                    </mask>
+                                </variation>
                                 <connections>
                                     <outlet property="dataSource" destination="vXZ-lx-hvc" id="EGH-0z-Oqm"/>
                                     <outlet property="delegate" destination="vXZ-lx-hvc" id="8yP-NB-K8L"/>
                                 </connections>
                             </tableView>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="akd-U1-uJW">
-                                <rect key="frame" x="51" y="562" width="381" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gDQ-fd-6mb">
-                                <rect key="frame" x="463" y="561" width="30" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gDQ-fd-6mb">
+                                <rect key="frame" x="554" y="561" width="30" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="8qI-nB-jek"/>
+                                    <constraint firstAttribute="width" constant="30" id="fPU-ez-x5e"/>
+                                </constraints>
                                 <state key="normal" title="Add">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -47,8 +56,39 @@
                                     <action selector="onAddButtonPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="fja-Np-guO"/>
                                 </connections>
                             </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="akd-U1-uJW">
+                                <rect key="frame" x="16" y="561" width="160" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="160" id="1gB-Dg-LPq"/>
+                                    <constraint firstAttribute="height" constant="30" id="aEd-hU-SAn"/>
+                                    <constraint firstAttribute="width" secondItem="akd-U1-uJW" secondAttribute="height" multiplier="127:10" id="e0H-Zd-OtF"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="e0H-Zd-OtF"/>
+                                    </mask>
+                                </variation>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="gDQ-fd-6mb" secondAttribute="bottom" constant="9" id="5vo-w8-YuO"/>
+                            <constraint firstItem="gDQ-fd-6mb" firstAttribute="trailing" secondItem="kh9-bI-dsS" secondAttribute="trailingMargin" id="7fK-7q-WA9"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="IGH-na-gdK" secondAttribute="trailing" constant="-16" id="8s4-FS-VZw"/>
+                            <constraint firstItem="gDQ-fd-6mb" firstAttribute="top" secondItem="IGH-na-gdK" secondAttribute="bottom" constant="15" id="Bex-t1-Bj3"/>
+                            <constraint firstItem="IGH-na-gdK" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="-16" id="PJV-wK-xG6"/>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="akd-U1-uJW" secondAttribute="bottom" constant="9" id="RSJ-FQ-nuZ"/>
+                            <constraint firstItem="IGH-na-gdK" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="topMargin" id="h8b-lO-fpL"/>
+                            <constraint firstItem="akd-U1-uJW" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="maQ-yJ-Vo1"/>
+                            <constraint firstItem="akd-U1-uJW" firstAttribute="top" secondItem="IGH-na-gdK" secondAttribute="bottom" constant="16" id="w60-OA-xHj"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="w60-OA-xHj"/>
+                            </mask>
+                        </variation>
                     </view>
                     <navigationItem key="navigationItem" id="Z6o-oF-Fak"/>
                     <connections>
