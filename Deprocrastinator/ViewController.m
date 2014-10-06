@@ -8,7 +8,7 @@
 
 #import "ViewController.h"
 
-@interface ViewController () <UITableViewDelegate, UITableViewDataSource>
+@interface ViewController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *addToDoItemTextField;
 
@@ -20,6 +20,9 @@
 @end
 
 @implementation ViewController
+
+
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -39,11 +42,25 @@
     return cell;
 }
 
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"toDoListCell" forIndexPath:indexPath];
+    cell.accessoryType = UITableViewCellAccessoryCheckmark;
+  //  [self.toDoListTableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+
+
 - (IBAction)onAddButtonPressed:(id)sender {
     NSString *usersText = self.addToDoItemTextField.text;
     [self.todoListArray addObject:usersText];
-    [self.toDoListTableView reloadData];
+    //[self.toDoListTableView reloadData];
+    [self.toDoListTableView beginUpdates];
+    [self.toDoListTableView insertRowsAtIndexPaths:self.todoListArray withRowAnimation:UITableViewRowAnimationFade];
+    [self.toDoListTableView endUpdates];
     self.addToDoItemTextField.text = nil;
+    [self.addToDoItemTextField resignFirstResponder];
 }
 
 
