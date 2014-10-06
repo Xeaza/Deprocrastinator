@@ -12,6 +12,9 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *addToDoItemTextField;
 
+@property (weak, nonatomic) IBOutlet UITableView *toDoListTableView;
+
+
 @property NSMutableArray *todoListArray;
 
 @end
@@ -22,7 +25,6 @@
     [super viewDidLoad];
 
     self.todoListArray = [NSMutableArray arrayWithObjects:@"Sky Dive from Sears Tower", @"Eat Cake", @"Tickle a Dragon", @"Don't Panic", nil];
-
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -38,7 +40,10 @@
 }
 
 - (IBAction)onAddButtonPressed:(id)sender {
-
+    NSString *usersText = self.addToDoItemTextField.text;
+    [self.todoListArray addObject:usersText];
+    [self.toDoListTableView reloadData];
+    self.addToDoItemTextField.text = nil;
 }
 
 
