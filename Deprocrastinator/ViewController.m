@@ -34,7 +34,7 @@
     // TODO add array that keeps track of which cells are checked
     // TODO add array that keeps track of which cells have their text color different
     // Use these arrays to reset the cells to have the correct accessories when they are reused.
-    
+
     self.checkedIndexes = [NSMutableArray arrayWithCapacity:self.todoListArray.count];
     // Created array of 0s indicating that no cells have been selected (i.e. no checkmark added)
     for (int i = 0; i < self.todoListArray.count; i++)
@@ -52,6 +52,10 @@
     NSString *cellIdentifier = @"toDoListCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
 
+
+    // TODO
+    // Use the arrays holding which cells have check marks and changed text color here to updated the cells to
+    // show the correct information
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
                 reuseIdentifier:cellIdentifier];
