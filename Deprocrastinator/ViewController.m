@@ -52,6 +52,7 @@
     NSString *cellIdentifier = @"toDoListCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
 
+    // NOTE: Cells should only be minupulated in cellForRowAtIndexPath *****************************************
 
     // TODO
     // Use the arrays holding which cells have check marks and changed text color here to updated the cells to
@@ -76,6 +77,11 @@
 {
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     //cell.accessoryType = UITableViewCellAccessoryCheckmark;
+
+    // TODO - Don't update the cells here update them in cell for row at index path.
+    // remove the cell.accessoryType = something
+    // make sure to just update the data model (i.e. arrays) so that when cellsForRowAtIndexPath is called
+    // when you reload the data it updates with correct information.
    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 
     if (cell.accessoryType == UITableViewCellAccessoryNone)
