@@ -8,22 +8,28 @@
 
 #import "ViewController.h"
 
-@interface ViewController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
+@interface ViewController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UIAlertViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *addToDoItemTextField;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+
 @property NSMutableArray *checkedIndexes;
-
 @property NSMutableArray *todoListArray;
+@property NSIndexPath *indexToDelete;
+@property NSArray *checkedItemsArray;
 
-@end        // Update checkmarked buttson list
+@end
 
 @implementation ViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    self.todoListArray = [NSMutableArray arrayWithObjects:@"Sky Dive from Sears Tower", @"Eat Cake", @"Tickle a Dragon", @"Don't Panic", nil];
+    //self.checkedItemsArray = @[@{@"itemName" : @"Sky Dive from Sears Tower", @"itemIndex" : @0}];
+    //NSLog(@"%@", [[self.checkedItemsArray objectAtIndex:0] valueForKey:@"itemName"]);
+
+    self.indexToDelete = [[NSIndexPath alloc] init];
+    self.todoListArray = [NSMutableArray arrayWithObjects:@"Sky Dive from Sears Tower", @"Sky Dive from Sears Tower", @"Sky Dive from Sears Tower", @"Sky Dive from Sears Tower", @"Sky Dive from Sears Tower", @"Sky Dive from Sears Tower", @"Sky Dive from Sears Tower", @"Sky Dive from Sears Tower", @"Sky Dive from Sears Tower", @"Sky Dive from Sears Tower", @"Sky Dive from Sears Tower", @"Sky Dive from Sears Tower", @"Sky Dive from Sears Tower", @"Sky Dive from Sears Tower", @"Eat Cake", @"Tickle a Dragon", @"Don't Panic", nil];
 
     self.checkedIndexes = [NSMutableArray arrayWithCapacity:self.todoListArray.count];
     // Created array of 0s indicating that no cells have been selected (i.e. no checkmark added)
@@ -31,7 +37,6 @@
     {
         [self.checkedIndexes addObject:[NSNumber numberWithBool:NO]];
     }
-
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -40,7 +45,20 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"toDoListCell" forIndexPath:indexPath];
+    NSString *cellIdentifier = @"toDoListCell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
+
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+                reuseIdentifier:cellIdentifier];
+    }
+
+    //Refresh acessory for cell when tableview have many cells and reuse identifier
+    /*if([self.selectedIndexes objectAtIndex:indexPath.row]){
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    }else{
+        cell.accessoryType = UITableViewCellAccessoryNone;
+    }*/
 
     cell.textLabel.text = [self.todoListArray objectAtIndex:indexPath.row];
     return cell;
@@ -66,28 +84,21 @@
         // Update checkmarked buttson list
         [self.checkedIndexes replaceObjectAtIndex:indexPath.row withObject:[NSNumber numberWithBool:NO]];
     }
+}
 
-    if ([self.tableView isEditing]) {
-        [self.todoListArray removeObjectAtIndex:indexPath.row];
-        [self.checkedIndexes removeObjectAtIndex:indexPath.row];
-        [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-        [self.tableView reloadData];
+-(BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
 
-        [self.tableView setEditing:NO animated:YES];
-        
-    }
+-(void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
+
+
 }
 
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [self.todoListArray removeObjectAtIndex:indexPath.row];
-        [self.checkedIndexes removeObjectAtIndex:indexPath.row];
-        [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-        [self.tableView reloadData];
-
-        [self.tableView setEditing:NO animated:YES];
-
+        [self showDeleteCheckAlert: indexPath];
     }
 }
 
@@ -101,39 +112,62 @@
     self.addToDoItemTextField.text = nil;
     [self.addToDoItemTextField resignFirstResponder];
 }
-- (IBAction)onEditButtonPressed:(id)sender {
-    UIButton *tempButton = sender;
-    if ([tempButton.titleLabel.text isEqualToString:@"Edit"]) {
-        [tempButton setTitle:@"Done" forState:UIControlStateNormal];
+- (IBAction)onEditButtonPressed:(UIButton *)editButton {
+    if ([editButton.titleLabel.text isEqualToString:@"Edit"]) {
+        [editButton setTitle:@"Done" forState:UIControlStateNormal];
         // Add Logic to delete a rows
 
         [self.tableView setEditing:YES animated:YES];
 
     } else {
-        [tempButton setTitle:@"Edit" forState:UIControlStateNormal];
-        [self.tableView setEditing:NO animated:NO];
+        [editButton setTitle:@"Edit" forState:UIControlStateNormal];
+        [self.tableView setEditing:NO animated:YES];
 
     }
 }
 
 - (IBAction)onSwipeGesture:(UISwipeGestureRecognizer *)swipeGesture {
     CGPoint point = [swipeGesture locationInView:self.tableView];
-    //NSLog(@"%f", point.x);
-
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:point];
-    NSLog(@"%ld", (long)indexPath.row);
 
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
     if (cell.textLabel.textColor == [UIColor blackColor]) {
         cell.textLabel.textColor = [UIColor greenColor];
-    } else if (cell.textLabel.textColor == [UIColor greenColor]){
+    }
+    else if (cell.textLabel.textColor == [UIColor greenColor]){
         cell.textLabel.textColor = [UIColor yellowColor];
-    } else if (cell.textLabel.textColor == [UIColor yellowColor]) {
+    }
+    else if (cell.textLabel.textColor == [UIColor yellowColor]) {
         cell.textLabel.textColor = [UIColor redColor];
-    } else if (cell.textLabel.textColor == [UIColor redColor]) {
+    }
+    else if (cell.textLabel.textColor == [UIColor redColor]) {
         cell.textLabel.textColor = [UIColor blackColor];
     }
+}
 
+- (void)showDeleteCheckAlert: (NSIndexPath *)indexPath {
+    UIAlertView *alertView = [[UIAlertView alloc] init];
+    alertView.delegate = self;
+    self.indexToDelete = indexPath;
+    alertView.message = @"Go home you're drunk!";
+    [alertView addButtonWithTitle:@"HA jk..."];
+    [alertView addButtonWithTitle:@"Derete"];
+    [alertView show];
+}
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+
+    if (buttonIndex == 0 )
+    {
+        [self.tableView setEditing:NO animated:YES];
+    }
+    else
+    {
+        [self.todoListArray removeObjectAtIndex:self.indexToDelete.row];
+        [self.checkedIndexes removeObjectAtIndex:self.indexToDelete.row];
+        [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:self.indexToDelete] withRowAnimation:UITableViewRowAnimationFade];
+        [self.tableView reloadData];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
