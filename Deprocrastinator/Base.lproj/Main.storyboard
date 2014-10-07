@@ -86,6 +86,7 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="gDQ-fd-6mb" secondAttribute="bottom" constant="9" id="5vo-w8-YuO"/>
                             <constraint firstItem="gDQ-fd-6mb" firstAttribute="trailing" secondItem="kh9-bI-dsS" secondAttribute="trailingMargin" id="7fK-7q-WA9"/>
@@ -104,6 +105,9 @@
                                 <exclude reference="w60-OA-xHj"/>
                             </mask>
                         </variation>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="3hK-mw-geR" appends="YES" id="Z7I-V6-eYs"/>
+                        </connections>
                     </view>
                     <navigationItem key="navigationItem" id="Z6o-oF-Fak"/>
                     <connections>
@@ -112,6 +116,12 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
+                <swipeGestureRecognizer direction="right" id="3hK-mw-geR">
+                    <connections>
+                        <action selector="onSwipeGesture:" destination="vXZ-lx-hvc" id="dbB-y6-YLi"/>
+                        <outlet property="delegate" destination="vXZ-lx-hvc" id="IXS-M5-3pL"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="998" y="1016"/>
         </scene>

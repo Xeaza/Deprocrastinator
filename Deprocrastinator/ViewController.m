@@ -116,6 +116,25 @@
     }
 }
 
+- (IBAction)onSwipeGesture:(UISwipeGestureRecognizer *)swipeGesture {
+    CGPoint point = [swipeGesture locationInView:self.tableView];
+    //NSLog(@"%f", point.x);
+
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:point];
+    NSLog(@"%ld", (long)indexPath.row);
+
+    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+    if (cell.textLabel.textColor == [UIColor blackColor]) {
+        cell.textLabel.textColor = [UIColor greenColor];
+    } else if (cell.textLabel.textColor == [UIColor greenColor]){
+        cell.textLabel.textColor = [UIColor yellowColor];
+    } else if (cell.textLabel.textColor == [UIColor yellowColor]) {
+        cell.textLabel.textColor = [UIColor redColor];
+    } else if (cell.textLabel.textColor == [UIColor redColor]) {
+        cell.textLabel.textColor = [UIColor blackColor];
+    }
+
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
