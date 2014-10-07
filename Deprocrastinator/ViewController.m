@@ -31,6 +31,10 @@
     self.indexToDelete = [[NSIndexPath alloc] init];
     self.todoListArray = [NSMutableArray arrayWithObjects:@"Sky Dive from Sears Tower", @"Sky Dive from Sears Tower", @"Sky Dive from Sears Tower", @"Sky Dive from Sears Tower", @"Sky Dive from Sears Tower", @"Sky Dive from Sears Tower", @"Sky Dive from Sears Tower", @"Sky Dive from Sears Tower", @"Sky Dive from Sears Tower", @"Sky Dive from Sears Tower", @"Sky Dive from Sears Tower", @"Sky Dive from Sears Tower", @"Sky Dive from Sears Tower", @"Sky Dive from Sears Tower", @"Eat Cake", @"Tickle a Dragon", @"Don't Panic", nil];
 
+    // TODO add array that keeps track of which cells are checked
+    // TODO add array that keeps track of which cells have their text color different
+    // Use these arrays to reset the cells to have the correct accessories when they are reused.
+    
     self.checkedIndexes = [NSMutableArray arrayWithCapacity:self.todoListArray.count];
     // Created array of 0s indicating that no cells have been selected (i.e. no checkmark added)
     for (int i = 0; i < self.todoListArray.count; i++)
