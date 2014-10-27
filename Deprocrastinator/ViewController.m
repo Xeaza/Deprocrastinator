@@ -27,7 +27,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    // TODO: Make TextField scroll up when user starts typing so you can see it.
+    // TODO: Make return key on keyboard resignFirstResponder for keyboard and animate textField back back to it's place on the bottom
     self.indexToDelete = [[NSIndexPath alloc] init];
     self.todoListArray = [NSMutableArray arrayWithObjects:@"Sky Dive from Sears Tower", @"Sky Dive from Sears Tower", @"Sky Dive from Sears Tower", @"Sky Dive from Sears Tower", @"Sky Dive from Sears Tower", @"Sky Dive from Sears Tower", @"Sky Dive from Sears Tower", @"Sky Dive from Sears Tower", @"Sky Dive from Sears Tower", @"Sky Dive from Sears Tower", @"Sky Dive from Sears Tower", @"Sky Dive from Sears Tower", @"Sky Dive from Sears Tower", @"Sky Dive from Sears Tower", @"Eat Cake", @"Tickle a Dragon", @"Don't Panic", nil];
 
